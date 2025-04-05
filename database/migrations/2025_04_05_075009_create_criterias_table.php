@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('criterias', function (Blueprint $table) {
+        Schema::create('criteria', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // e.g. 'camera', 'battery', 'ram'
-            $table->enum('type', ['benefit', 'cost']); // TOPSIS butuh ini
+            $table->string('name'); // Contoh: 'camera', 'battery', 'ram'
+            $table->string('label'); // Contoh: 'Kamera', 'Baterai'
+            $table->enum('type', ['benefit', 'cost'])->default('benefit'); // optional
             $table->timestamps();
         });
+
 
     }
 
