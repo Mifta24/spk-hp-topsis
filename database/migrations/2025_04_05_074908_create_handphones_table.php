@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('camera');   // skor kamera 1-10
             $table->integer('battery');  // skor baterai 1-10
             $table->integer('ram');      // skor RAM 1-10
+            $table->integer('prosessor'); // skor prosessor 1-10
+            $table->integer('design');   // skor desain 1-10
+            $table->integer('storage');  // skor penyimpanan 1-10
             $table->timestamps();
         });
 

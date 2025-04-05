@@ -26,10 +26,9 @@ class RecommendationController extends Controller
         $weights = $request->input('weights');
         $totalWeight = array_sum($weights);
 
-        // Validasi total bobot mendekati 1
-        if (abs($totalWeight - 1) > 0.01) {
-            return back()->withErrors(['weights' => 'Jumlah total bobot harus = 1. Saat ini: ' . $totalWeight])
-                        ->withInput();
+        // Normalisasi bobot agar totalnya = 1
+        foreach ($weights as $key => $weight) {
+            $weights[$key] = $weight / $totalWeight;
         }
 
         $min = $request->input('min_price');
@@ -39,12 +38,36 @@ class RecommendationController extends Controller
 
         if ($handphones->isEmpty()) {
             return back()->withErrors(['price' => 'Tidak ada handphone dalam rentang harga tersebut'])
-                        ->withInput();
+                ->withInput();
         }
 
         $result = $this->topsis($handphones, $weights);
 
-        return view('recommendation.result', compact('result', 'weights'));
+        // Tambahkan informasi tentang bobot yang digunakan
+        $weightLabels = [];
+        foreach ($weights as $name => $value) {
+            $criteria = Criteria::where('name', $name)->first();
+            $weightLabels[$criteria->label] = [
+                'value' => $value,
+                'original' => $this->getWeightLabel($request->input('weights')[$name])
+            ];
+        }
+
+        // Kirim variable weights ke view
+        return view('recommendation.result', compact('result', 'weightLabels', 'weights'));
+    }
+
+    private function getWeightLabel($value)
+    {
+        $labels = [
+            '0.1' => 'Tidak Penting',
+            '0.2' => 'Kurang Penting',
+            '0.3' => 'Cukup Penting',
+            '0.4' => 'Penting',
+            '0.5' => 'Sangat Penting',
+        ];
+
+        return $labels[$value] ?? 'Tidak diketahui';
     }
 
     private function topsis($handphones, $weights)

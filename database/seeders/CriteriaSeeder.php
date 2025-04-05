@@ -17,6 +17,10 @@ class CriteriaSeeder extends Seeder
             ['name' => 'camera', 'label' => 'Kamera', 'type' => 'benefit'],
             ['name' => 'battery', 'label' => 'Baterai', 'type' => 'benefit'],
             ['name' => 'ram', 'label' => 'RAM', 'type' => 'benefit'],
+            ['name' => 'prosessor', 'label' => 'Prosessor', 'type' => 'benefit'],
+            ['name' => 'design', 'label' => 'Desain', 'type' => 'benefit'],
+            ['name' => 'storage', 'label' => 'Penyimpanan', 'type' => 'benefit'],
+
         ];
 
         foreach ($criterias as $c) {
