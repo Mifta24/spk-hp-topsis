@@ -11,7 +11,7 @@
 <body class="bg-gray-50">
     <div class="min-h-screen flex flex-col">
         <!-- Header -->
-        <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-md">
+        <header class="bg-gradient-to-r bg-gray-800 text-white py-6 shadow-md">
             <div class="container mx-auto px-4 py-6">
                 <div class="flex justify-between items-center">
                     <div>
@@ -19,7 +19,7 @@
                         <p class="text-blue-100">Sistem Rekomendasi Handphone dengan Metode TOPSIS</p>
                     </div>
                     <div class="hidden md:block">
-                        <img src="https://cdn-icons-png.flaticon.com/512/9492/9492929.png" alt="Phone Icon" class="h-16">
+                        <img src="   https://cdn-icons-png.flaticon.com/512/186/186239.png " alt="Phone Icon" class="h-16">
                     </div>
                 </div>
             </div>

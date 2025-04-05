@@ -6,11 +6,11 @@
         </a>
     </div>
 
-    @if(count($result) > 0)
+    @if (count($result) > 0)
         <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
             <p class="text-sm">Menampilkan {{ count($result) }} handphone yang diurutkan berdasarkan skor tertinggi.</p>
         </div>
-
+        
         <div class="overflow-x-auto">
             <table class="table-auto w-full border">
                 <thead class="bg-gray-100">
@@ -47,8 +47,8 @@
             <div class="bg-gray-50 p-4 rounded border">
                 <p class="mb-3">
                     <strong>Bobot yang digunakan:</strong><br>
-                    @foreach($weights as $name => $weight)
-                        {{ ucfirst($name) }}: {{ $weight }}<br>
+                    @foreach ($weightLabels as $name => $info)
+                        {{ $name }}: <span class="font-medium">{{ $info['original'] }}</span> (nilai ternormalisasi: {{ number_format($info['value'], 3) }})<br>
                     @endforeach
                 </p>
 
