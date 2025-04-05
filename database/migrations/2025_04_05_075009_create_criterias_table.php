@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('criteria', function (Blueprint $table) {
+        Schema::create('criterias', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Contoh: 'camera', 'battery', 'ram'
             $table->string('label'); // Contoh: 'Kamera', 'Baterai'
