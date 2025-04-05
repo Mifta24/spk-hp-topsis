@@ -93,7 +93,7 @@ class HandphoneController extends Controller
             ->take(3)
             ->get();
 
-        return view('handphone.detail', compact('handphone', 'similarPhones'));
+        return view('handphone.show', compact('handphone', 'similarPhones'));
     }
 
     public function edit($id)

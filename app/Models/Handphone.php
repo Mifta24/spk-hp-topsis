@@ -17,7 +17,7 @@ class Handphone extends Model
         'storage',
     ];
 
-    public function specifications()
+    public function specification()
     {
         return $this->hasOne(HandphoneSpecification::class);
     }
