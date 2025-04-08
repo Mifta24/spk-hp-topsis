@@ -22,21 +22,21 @@ class CriteriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:criteria',
+            'name' => 'required|unique:criterias',
             'label' => 'required',
             'type' => 'required|in:benefit,cost',
         ]);
 
         Criteria::create($request->all());
-        return redirect()->route('criteria.index')->with('success', 'Kriteria berhasil ditambahkan');
+        return redirect()->route('admin.criteria.index')->with('success', 'Kriteria berhasil ditambahkan');
     }
 
-    public function edit(Criteria $criteria)
+    public function edit(Criteria $criterion) // Laravel akan mengharapkan nama parameter 'criterion'
     {
-        return view('admin.criteria.edit', compact('criteria'));
+        return view('admin.criteria.edit', ['criteria' => $criterion]);
     }
 
-    public function update(Request $request, Criteria $criteria)
+    public function update(Request $request, Criteria $criterion) // Laravel akan mengharapkan nama parameter 'criterion'
     {
         $request->validate([
             'name' => 'required',
@@ -44,13 +44,13 @@ class CriteriaController extends Controller
             'type' => 'required|in:benefit,cost',
         ]);
 
-        $criteria->update($request->all());
-        return redirect()->route('criteria.index')->with('success', 'Kriteria berhasil diperbarui');
+        $criterion->update($request->all());
+        return redirect()->route('admin.criteria.index')->with('success', 'Kriteria berhasil diperbarui');
     }
 
-    public function destroy(Criteria $criteria)
+    public function destroy(Criteria $criterion) // Laravel akan mengharapkan nama parameter 'criterion'
     {
-        $criteria->delete();
-        return back()->with('success', 'Kriteria berhasil dihapus');
+        $criterion->delete();
+        return redirect()->route('admin.criteria.index')->with('success', 'Kriteria berhasil dihapus');
     }
 }

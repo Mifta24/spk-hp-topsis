@@ -8,6 +8,7 @@ class Criteria extends Model
 {
     protected $fillable = [
         'name',
+        'label',
         'type', // benefit or cost
     ];
 }
