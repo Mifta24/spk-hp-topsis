@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('handphones', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('brand_id')->nullable()->after('id')->constrained()->onDelete('set null');
             $table->string('name');
             $table->integer('price');
             $table->integer('camera');   // skor kamera 1-10
@@ -31,6 +32,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Drop the foreign key constraint first
+        Schema::table('handphones', function (Blueprint $table) {
+            $table->dropForeign(['brand_id']);
+            
+        });
+        // Then drop the table
         Schema::dropIfExists('handphones');
     }
 };
