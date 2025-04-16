@@ -4,7 +4,7 @@
 
         <!-- Back Button -->
         <div class="px-6 pt-6">
-            <a href="{{ url()->previous() }}"
+            <a href="{{ route('recommendation') }}"
                 class="inline-flex items-center text-gray-600 hover:text-indigo-600 transition-colors">
                 <i class="fas fa-arrow-left mr-2"></i> Kembali
             </a>
@@ -216,44 +216,156 @@
             </div>
         @endif
 
+
         <!-- Performance Ratings -->
         <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+
             <h2 class="text-lg font-bold mb-4">Penilaian Performa</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Kamera -->
                 <div>
                     <div class="flex justify-between mb-1">
                         <span class="text-sm font-medium">Kamera</span>
                         <span class="text-sm font-medium">{{ $handphone->camera }}/10</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-green-600 h-2 rounded-full"
-                            style="width: {{ $handphone->camera * 10 }}%"></div>
+                        <div class="bg-green-600 h-2 rounded-full" style="width: {{ $handphone->camera * 10 }}%">
+                        </div>
                     </div>
                 </div>
 
+                <!-- Baterai -->
                 <div>
                     <div class="flex justify-between mb-1">
                         <span class="text-sm font-medium">Baterai</span>
                         <span class="text-sm font-medium">{{ $handphone->battery }}/10</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-yellow-600 h-2 rounded-full"
-                            style="width: {{ $handphone->battery * 10 }}%"></div>
+                        <div class="bg-yellow-600 h-2 rounded-full" style="width: {{ $handphone->battery * 10 }}%">
+                        </div>
                     </div>
                 </div>
 
+                <!-- RAM -->
                 <div>
                     <div class="flex justify-between mb-1">
                         <span class="text-sm font-medium">RAM</span>
                         <span class="text-sm font-medium">{{ $handphone->ram }}/10</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-blue-600 h-2 rounded-full"
-                            style="width: {{ $handphone->ram * 10 }}%"></div>
+                        <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $handphone->ram * 10 }}%"></div>
+                    </div>
+                </div>
+
+                <!-- Prosesor -->
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-sm font-medium">Prosesor</span>
+                        <span class="text-sm font-medium">{{ $handphone->prosessor }}/10</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-red-600 h-2 rounded-full" style="width: {{ $handphone->prosessor * 10 }}%">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desain -->
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-sm font-medium">Desain</span>
+                        <span class="text-sm font-medium">{{ $handphone->design }}/10</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-purple-600 h-2 rounded-full" style="width: {{ $handphone->design * 10 }}%">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Penyimpanan -->
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-sm font-medium">Penyimpanan</span>
+                        <span class="text-sm font-medium">{{ $handphone->storage }}/10</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-indigo-600 h-2 rounded-full" style="width: {{ $handphone->storage * 10 }}%">
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Best Features Summary -->
+            <div class="mt-6 p-4 bg-white rounded-lg border border-gray-200">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">Keunggulan Handphone Ini</h3>
+                <div class="flex flex-wrap gap-2">
+                    @php
+                        $ratings = [
+                            'Kamera' => ['value' => $handphone->camera, 'icon' => 'camera', 'color' => 'green'],
+                            'Baterai' => [
+                                'value' => $handphone->battery,
+                                'icon' => 'battery-full',
+                                'color' => 'yellow',
+                            ],
+                            'RAM' => ['value' => $handphone->ram, 'icon' => 'memory', 'color' => 'blue'],
+                            'Prosesor' => ['value' => $handphone->prosessor, 'icon' => 'microchip', 'color' => 'red'],
+                            'Desain' => ['value' => $handphone->design, 'icon' => 'mobile-alt', 'color' => 'purple'],
+                            'Penyimpanan' => ['value' => $handphone->storage, 'icon' => 'hdd', 'color' => 'indigo'],
+                        ];
+
+                        arsort($ratings);
+                        $bestFeatures = array_slice($ratings, 0, 3);
+                    @endphp
+
+                    @foreach ($bestFeatures as $feature => $data)
+                        <div
+                            class="bg-{{ $data['color'] }}-50 text-{{ $data['color'] }}-800 px-3 py-2 rounded-md flex items-center">
+                            <i class="fas fa-{{ $data['icon'] }} mr-2"></i>
+                            <div>
+                                <span class="text-xs text-{{ $data['color'] }}-600">{{ $feature }}</span>
+                                <div class="font-semibold">{{ $data['value'] }}/10</div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <!-- Similar Phones Section -->
+        <div class="px-6 py-6 border-t border-gray-200">
+            <h2 class="text-lg font-bold mb-4">Handphone Serupa</h2>
+            <p class="text-gray-600 text-sm mb-6">Tertarik dengan {{ $handphone->name }}? Coba bandingkan dengan
+                handphone lainnya</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a href="{{ route('recommendation') }}"
+                    class="block bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg p-6 text-white hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold">Cari Rekomendasi</h3>
+                        <i class="fas fa-search-plus text-xl"></i>
+                    </div>
+                    <p class="text-indigo-100 text-sm">Temukan handphone terbaik sesuai kebutuhan Anda</p>
+                </a>
+
+                <a href="{{ route('handphone.index') }}"
+                    class="block bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg p-6 text-white hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold">Katalog Handphone</h3>
+                        <i class="fas fa-mobile-alt text-xl"></i>
+                    </div>
+                    <p class="text-blue-100 text-sm">Telusuri semua handphone dalam database kami</p>
+                </a>
+                {{-- Comming soon --}}
+                <a href="#"
+                    class="block bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg p-6 text-white hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold">Mode Perbandingan</h3>
+                        <i class="fas fa-exchange-alt text-xl"></i>
+                    </div>
+                    <p class="text-emerald-100 text-sm">Bandingkan spesifikasi beberapa handphone sekaligus</p>
+                </a>
+            </div>
         </div>
     </div>
+
 </x-layout>
