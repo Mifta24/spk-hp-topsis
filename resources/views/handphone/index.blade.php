@@ -225,7 +225,14 @@
                                     @endif
                                 @endif
                             </span>
-                            <span class="text-indigo-600 text-sm">Detail <i class="fas fa-chevron-right ml-1 text-xs"></i></span>
+                            <div class="flex gap-2">
+                                <a href="{{ route('compare.add', $phone->id) }}" class="text-blue-600 hover:text-blue-800 text-xs">
+                                    <i class="fas fa-exchange-alt mr-1"></i> Bandingkan
+                                </a>
+                                <span class="text-gray-300">|</span>
+                                <a href="{{ route('handphone.detail', $phone->id) }}" class="text-indigo-600 text-sm">Detail <i class="fas fa-chevron-right ml-1 text-xs"></i></a>
+                            </div>
+                            {{-- <span class="text-indigo-600 text-sm">Detail <i class="fas fa-chevron-right ml-1 text-xs"></i></span> --}}
                         </div>
                     </div>
                 </a>

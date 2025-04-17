@@ -23,6 +23,13 @@ Route::get('/handphone/{id}', [HandphoneController::class, 'show'])->name('handp
 Route::get('/recommendation', [RecommendationController::class, 'index'])->name('recommendation');
 Route::post('/recommendation/result', [RecommendationController::class, 'result'])->name('recommendation.result');
 
+// Compare routes
+Route::get('/compare', [App\Http\Controllers\CompareController::class, 'index'])->name('compare.index');
+Route::get('/compare/add/{id}', [App\Http\Controllers\CompareController::class, 'add'])->name('compare.add');
+Route::get('/compare/remove/{id}', [App\Http\Controllers\CompareController::class, 'remove'])->name('compare.remove');
+Route::get('/compare/clear', [App\Http\Controllers\CompareController::class, 'clear'])->name('compare.clear');
+
+// Admin Routes
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Dashboard
     Route::get('/', function () {
