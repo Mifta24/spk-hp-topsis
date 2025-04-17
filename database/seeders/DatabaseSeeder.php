@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Handphone;
 use App\Models\User;
+use App\Models\Handphone;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\BrandSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,8 +20,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BrandSeeder::class,
             HandphoneSeeder::class,
-            CriteriaSeeder::class,
             HandphoneSpecificationSeeder::class,
+            CriteriaSeeder::class,
+            // HandphoneSmartphoneSeeder::class,
         ]);
     }
 }
