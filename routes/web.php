@@ -1,11 +1,13 @@
 <?php
 
+use App\Models\Brand;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HandphoneController;
+use App\Http\Controllers\admin\BrandController as AdminBrandController;
+use App\Http\Controllers\RecommendationController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\CriteriaController as AdminCriteriaController;
 use App\Http\Controllers\Admin\HandphoneController as AdminHandphoneController;
-use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
-use App\Http\Controllers\RecommendationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +32,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Resource Routes
     Route::resource('criteria', AdminCriteriaController::class);
     Route::resource('handphone', AdminHandphoneController::class);
+    Route::resource('brand', AdminBrandController::class);
 
     // Profile Routes
     Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile');
