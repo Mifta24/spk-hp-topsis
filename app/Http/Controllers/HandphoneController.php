@@ -9,43 +9,70 @@ class HandphoneController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Handphone::with('specification');
+        // Start with a base query
+        $query = Handphone::query()
+            ->with(['specification', 'brand']);
 
-        // Filter by price range
-        if ($request->filled('price_range')) {
+        // Search functionality
+        if ($request->has('search') && $request->search) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhereHas('brand', function($brandQuery) use ($searchTerm) {
+                      $brandQuery->where('name', 'like', '%' . $searchTerm . '%');
+                  });
+            });
+        }
+
+        // Brand filter
+        if ($request->has('brand') && $request->brand) {
+            $query->where('brand_id', $request->brand);
+        }
+
+        // Price range filter (existing code)
+        if ($request->has('price_range') && $request->price_range) {
             switch ($request->price_range) {
                 case 'budget':
                     $query->where('price', '<', 2000000);
                     break;
                 case 'entry':
-                    $query->whereBetween('price', [2000000, 4000000]);
+                    $query->whereBetween('price', [2000000, 3999999]);
                     break;
                 case 'mid':
-                    $query->whereBetween('price', [4000000, 8000000]);
+                    $query->whereBetween('price', [4000000, 7999999]);
                     break;
                 case 'premium':
-                    $query->where('price', '>', 8000000);
+                    $query->where('price', '>=', 8000000);
                     break;
             }
         }
 
-        // Filter by feature
-        if ($request->filled('feature')) {
+        // Feature filter (existing code)
+        if ($request->has('feature') && $request->feature) {
             switch ($request->feature) {
                 case 'camera':
-                    $query->where('camera', '>=', 8);
+                    $query->where('camera', '>=', 9);
                     break;
                 case 'battery':
-                    $query->where('battery', '>=', 8);
+                    $query->where('battery', '>=', 9);
                     break;
                 case 'ram':
-                    $query->where('ram', '>=', 8);
+                    $query->where('ram', '>=', 9);
+                    break;
+                case 'storage':
+                    $query->where('storage', '>=', 9);
+                    break;
+                case 'peformance':
+                    $query->where('processor', '>=', 9);
+                    break;
+                case 'design':
+                    $query->where('design', '>=', 9);
                     break;
             }
         }
 
-        // Sort results
-        if ($request->filled('sort_by')) {
+        // Sorting (existing code)
+        if ($request->has('sort_by') && $request->sort_by) {
             switch ($request->sort_by) {
                 case 'price_asc':
                     $query->orderBy('price', 'asc');
@@ -60,13 +87,15 @@ class HandphoneController extends Controller
                     $query->orderBy('name', 'desc');
                     break;
                 default:
-                    $query->orderBy('price', 'asc');
+                    $query->orderBy('id', 'desc');
+                    break;
             }
         } else {
-            $query->orderBy('price', 'asc');
+            // Default sorting
+            $query->orderBy('id', 'desc');
         }
 
-        $handphones = $query->paginate(9);
+        $handphones = $query->paginate(12);
 
         return view('handphone.index', compact('handphones'));
     }

@@ -13,9 +13,37 @@
             </div>
         </div>
 
-        <!-- Filters -->
+        <!-- Search Bar - NEW -->
+        <div class="mb-6">
+            <form action="{{ route('handphone.index') }}" method="GET" class="flex">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari handphone..." class="w-full md:w-1/2 rounded-l-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-r-md">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Filters - UPDATED -->
         <div class="bg-gray-50 p-4 rounded-lg mb-6 border border-gray-200">
-            <form action="{{ route('handphone.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <form action="{{ route('handphone.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <!-- Keep existing search parameter if present -->
+                @if(request('search'))
+                    <input type="hidden" name="search" value="{{ request('search') }}">
+                @endif
+
+                <!-- Brand Filter - NEW -->
+                <div>
+                    <label for="brand" class="block text-sm font-medium text-gray-700 mb-1">Brand</label>
+                    <select name="brand" id="brand" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="">Semua Brand</option>
+                        @foreach(\App\Models\Brand::where('is_active', true)->orderBy('name')->get() as $brand)
+                            <option value="{{ $brand->id }}" {{ request('brand') == $brand->id ? 'selected' : '' }}>
+                                {{ $brand->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div>
                     <label for="price_range" class="block text-sm font-medium text-gray-700 mb-1">Rentang Harga</label>
                     <select name="price_range" id="price_range" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -44,6 +72,9 @@
                         <option value="camera" {{ request('feature') == 'camera' ? 'selected' : '' }}>Kamera Bagus</option>
                         <option value="battery" {{ request('feature') == 'battery' ? 'selected' : '' }}>Baterai Tahan Lama</option>
                         <option value="ram" {{ request('feature') == 'ram' ? 'selected' : '' }}>RAM Besar</option>
+                        <option value="storage" {{ request('feature') == 'storage' ? 'selected' : '' }}>Penyimpanan Besar</option>
+                        <option value="design" {{ request('feature') == 'design' ? 'selected' : '' }}>Desain Menarik</option>
+                        <option value="processor" {{ request('feature') == 'processor' ? 'selected' : '' }}>Prosesor Canggih</option>
                     </select>
                 </div>
 
@@ -55,14 +86,83 @@
             </form>
         </div>
 
-        <!-- Handphone List -->
+        <!-- Active Filters - NEW -->
+        @if(request('search') || request('brand') || request('price_range') || request('feature'))
+        <div class="mb-6 flex flex-wrap items-center">
+            <span class="text-sm text-gray-600 mr-2">Filter aktif:</span>
+
+            @if(request('search'))
+            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full flex items-center m-1">
+                Pencarian: "{{ request('search') }}"
+                <a href="{{ url()->current() }}?{{ http_build_query(request()->except('search')) }}" class="ml-1 text-gray-500 hover:text-red-500">
+                    <i class="fas fa-times-circle"></i>
+                </a>
+            </span>
+            @endif
+
+            @if(request('brand'))
+            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full flex items-center m-1">
+                Brand: {{ \App\Models\Brand::find(request('brand'))->name ?? '' }}
+                <a href="{{ url()->current() }}?{{ http_build_query(request()->except('brand')) }}" class="ml-1 text-gray-500 hover:text-red-500">
+                    <i class="fas fa-times-circle"></i>
+                </a>
+            </span>
+            @endif
+
+            @if(request('price_range'))
+            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full flex items-center m-1">
+                Harga:
+                @if(request('price_range') == 'budget')
+                    Budget (< 2 juta)
+                @elseif(request('price_range') == 'entry')
+                    Entry Level (2-4 juta)
+                @elseif(request('price_range') == 'mid')
+                    Mid Range (4-8 juta)
+                @elseif(request('price_range') == 'premium')
+                    Premium (> 8 juta)
+                @endif
+                <a href="{{ url()->current() }}?{{ http_build_query(request()->except('price_range')) }}" class="ml-1 text-gray-500 hover:text-red-500">
+                    <i class="fas fa-times-circle"></i>
+                </a>
+            </span>
+            @endif
+
+            @if(request('feature'))
+            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full flex items-center m-1">
+                Fitur:
+                @if(request('feature') == 'camera')
+                    Kamera Bagus
+                @elseif(request('feature') == 'battery')
+                    Baterai Tahan Lama
+                @elseif(request('feature') == 'ram')
+                    RAM Besar
+                @elseif (request('feature') == 'storage')
+                    Penyimpanan Besar
+                @elseif (request('feature') == 'design')
+                    Desain Menarik
+                @elseif (request('feature') == 'processor')
+                    Prosesor Cepat
+                @endif
+                <a href="{{ url()->current() }}?{{ http_build_query(request()->except('feature')) }}" class="ml-1 text-gray-500 hover:text-red-500">
+                    <i class="fas fa-times-circle"></i>
+                </a>
+            </span>
+            @endif
+
+            <a href="{{ route('handphone.index') }}" class="text-indigo-600 hover:text-indigo-800 text-sm ml-auto">
+                <i class="fas fa-times mr-1"></i> Hapus semua filter
+            </a>
+        </div>
+        @endif
+
+        <!-- Handphone List - UPDATED -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($handphones as $phone)
             <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
                 <a href="{{ route('handphone.detail', $phone->id) }}" class="block">
                     <div class="relative">
                         @if($phone->specification && $phone->specification->image)
-                            <img src="{{ $phone->specification->image }}"  alt="{{ $phone->name }}" class="w-full h-48 object-contain">
+                            <img src="{{ $phone->specification->image }}" alt="{{ $phone->name }}" class="w-full h-48 object-contain">
                         @else
                             <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
                                 <span class="text-gray-500"><i class="fas fa-mobile-alt text-4xl"></i></span>
@@ -83,6 +183,13 @@
                     </div>
 
                     <div class="p-4">
+                        <!-- Brand name display - NEW -->
+                        @if($phone->brand)
+                            <div class="text-xs text-gray-500 mb-1">
+                                {{ $phone->brand->name }}
+                            </div>
+                        @endif
+
                         <h3 class="font-semibold text-lg text-gray-800 mb-1">{{ $phone->name }}</h3>
                         <p class="text-gray-600 text-sm mb-3">Rp{{ number_format($phone->price, 0, ',', '.') }}</p>
 
