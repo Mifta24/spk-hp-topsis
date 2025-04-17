@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Handphone extends Model
 {
     protected $fillable = [
+        'brand_id',
         'name',
         'price',
         'camera',
