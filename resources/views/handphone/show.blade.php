@@ -4,7 +4,7 @@
 
         <!-- Back Button -->
         <div class="px-6 pt-6">
-            <a href="{{ route('recommendation') }}"
+            <a href="{{ route('handphone.index') }}"
                 class="inline-flex items-center text-gray-600 hover:text-indigo-600 transition-colors">
                 <i class="fas fa-arrow-left mr-2"></i> Kembali
             </a>
@@ -23,7 +23,9 @@
 
                 <!-- Phone Info -->
                 <div class="md:w-2/3">
-                    <h1 class="text-2xl font-bold text-gray-800 mb-2">{{ $handphone->name }}</h1>
+                    <h1 class="text-2xl font-bold text-gray-800 mb-2">{{ $handphone->name }}<p
+                            class="text-sm text-gray-600">{{ $handphone->brand->name }}</p>
+                    </h1>
 
                     <div class="flex items-center mb-4">
                         <div class="bg-indigo-100 text-indigo-800 py-1 px-3 rounded-full text-sm font-medium">
@@ -355,8 +357,8 @@
                     </div>
                     <p class="text-blue-100 text-sm">Telusuri semua handphone dalam database kami</p>
                 </a>
-                {{-- Comming soon --}}
-                <a href="#"
+       
+                <a href="{{ route('compare.add', $handphone->id) }}"
                     class="block bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg p-6 text-white hover:shadow-lg transition-shadow">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="font-bold">Mode Perbandingan</h3>

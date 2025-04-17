@@ -1,11 +1,13 @@
 <?php
 
+use App\Models\Brand;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HandphoneController;
+use App\Http\Controllers\admin\BrandController as AdminBrandController;
+use App\Http\Controllers\RecommendationController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\CriteriaController as AdminCriteriaController;
 use App\Http\Controllers\Admin\HandphoneController as AdminHandphoneController;
-use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
-use App\Http\Controllers\RecommendationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,6 +23,13 @@ Route::get('/handphone/{id}', [HandphoneController::class, 'show'])->name('handp
 Route::get('/recommendation', [RecommendationController::class, 'index'])->name('recommendation');
 Route::post('/recommendation/result', [RecommendationController::class, 'result'])->name('recommendation.result');
 
+// Compare routes
+Route::get('/compare', [App\Http\Controllers\CompareController::class, 'index'])->name('compare.index');
+Route::get('/compare/add/{id}', [App\Http\Controllers\CompareController::class, 'add'])->name('compare.add');
+Route::get('/compare/remove/{id}', [App\Http\Controllers\CompareController::class, 'remove'])->name('compare.remove');
+Route::get('/compare/clear', [App\Http\Controllers\CompareController::class, 'clear'])->name('compare.clear');
+
+// Admin Routes
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Dashboard
     Route::get('/', function () {
@@ -30,6 +39,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Resource Routes
     Route::resource('criteria', AdminCriteriaController::class);
     Route::resource('handphone', AdminHandphoneController::class);
+    Route::resource('brand', AdminBrandController::class);
 
     // Profile Routes
     Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile');

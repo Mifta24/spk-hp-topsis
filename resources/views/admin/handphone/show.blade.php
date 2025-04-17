@@ -3,7 +3,7 @@
     <div class="mb-6 flex justify-between items-center">
         <div>
             <h2 class="text-xl font-semibold text-gray-800">{{ $handphone->name }}</h2>
-            <p class="text-gray-600 text-sm mt-1">ID: {{ $handphone->id }}</p>
+            <p class="text-gray-600 text-sm mt-1">Brand: {{ $handphone->brand->name }}</p>
         </div>
         <div class="flex space-x-2">
             <a href="{{ route('admin.handphone.edit', $handphone->id) }}"

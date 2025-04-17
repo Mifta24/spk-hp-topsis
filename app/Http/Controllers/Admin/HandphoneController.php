@@ -63,6 +63,7 @@ class HandphoneController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
+            'brand_id' => 'required|exists:brands,id',
             'camera' => 'required|integer|min:1|max:10',
             'battery' => 'required|integer|min:1|max:10',
             'ram' => 'required|integer|min:1|max:10',
@@ -90,6 +91,7 @@ class HandphoneController extends Controller
 
         // Create handphone
         $handphone = Handphone::create([
+            'brand_id' => $request->brand_id,
             'name' => $request->name,
             'price' => $request->price,
             'camera' => $request->camera,
@@ -160,6 +162,7 @@ class HandphoneController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
+            'brand_id' => 'required|exists:brands,id',
             'camera' => 'required|integer|min:1|max:10',
             'battery' => 'required|integer|min:1|max:10',
             'ram' => 'required|integer|min:1|max:10',
@@ -189,6 +192,7 @@ class HandphoneController extends Controller
 
         // Update handphone
         $handphone->update([
+            'brand_id' => $request->brand_id,
             'name' => $request->name,
             'price' => $request->price,
             'camera' => $request->camera,

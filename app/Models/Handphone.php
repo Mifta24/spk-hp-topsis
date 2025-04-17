@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Handphone extends Model
 {
     protected $fillable = [
+        'brand_id',
         'name',
         'price',
         'camera',
@@ -16,6 +18,11 @@ class Handphone extends Model
         'design',
         'storage',
     ];
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class);
+    }
 
     public function specification()
     {
