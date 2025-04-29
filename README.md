@@ -2,17 +2,36 @@
 
 ![PhoneMatch Logo](https://cdn-icons-png.flaticon.com/512/186/186239.png)
 
-## Website PhoneMatch
-![PhoneMatch Website](https://phonematch.laravel.cloud)
+🌐 Website PhoneMatch
+PhoneMatch Website
+(https://phonematch.laravel.cloud/)
 
-<div align="center">
-  <a href="#fitur"><strong>Fitur</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
-  <a href="#teknologi"><strong>Teknologi</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
-  <a href="#instalasi"><strong>Instalasi</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
-  <a href="#penggunaan"><strong>Penggunaan</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
-  <a href="#metodologi"><strong>Metodologi</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
-  <a href="#kontribusi"><strong>Kontribusi</strong></a>
-</div>
+## 📑 Table of Contents
+1. [📱 Tentang PhoneMatch](#tentang-phonematch)
+2. [✨ Fitur](#fitur)
+   - [🔍 Pencarian & Rekomendasi](#pencarian--rekomendasi)
+   - [📊 Katalog & Perbandingan](#katalog--perbandingan)
+   - [ℹ️ Edukasi & Informasi](#edukasi--informasi)
+3. [🛠️ Teknologi](#teknologi)
+   - [Frontend](#frontend)
+   - [Backend](#backend)
+   - [Infrastruktur](#infrastruktur)
+4. [🚀 Instalasi](#instalasi)
+   - [Prasyarat](#prasyarat)
+   - [Langkah-langkah Instalasi](#langkah-langkah-instalasi)
+5. [📖 Penggunaan](#penggunaan)
+   - [Mencari Rekomendasi Handphone](#mencari-rekomendasi-handphone)
+   - [Menjelajahi Katalog Handphone](#menjelajahi-katalog-handphone)
+6. [📊 Metodologi](#metodologi)
+   - [TOPSIS (Technique for Order Preference by Similarity to Ideal Solution)](#topsis-technique-for-order-preference-by-similarity-to-ideal-solution)
+7. [📁 Struktur Database](#struktur-database)
+   - [Tabel Utama](#tabel-utama)
+8. [🔧 Konfigurasi](#konfigurasi)
+9. [👥 Kontribusi](#kontribusi)
+   - [Panduan Kontribusi](#panduan-kontribusi)
+10. [📜 Lisensi](#lisensi)
+11. [📞 Kontak](#kontak)
+12. [🙏 Pengakuan](#pengakuan)
 
 <br>
 
@@ -272,7 +291,7 @@ Didistribusikan di bawah Lisensi MIT. Lihat `LICENSE` untuk informasi lebih lanj
 
 ## 📞 Kontak
 
-Miftah - [@Mifta24](https://github.com/Mifta24) - miftah@example.com
+Miftah - [@Mifta24](https://github.com/Mifta24) - miftafree3@gmail.com
 
 Project Link: [https://github.com/mifta24/spk-hp-topsis](https://github.com/mifta24/spk-hp-topsis)
 
