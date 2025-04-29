@@ -15,18 +15,26 @@ class HandphoneSeeder extends Seeder
      */
     public function run(): void
     {
+        
+        // Path to JSON file - adjust this to where you saved the file
+        $jsonPath = Storage::path('devices.json');
 
-        // Load JSON data
-        $jsonPath = storage_path('app/devices.json');
-
+        // If the file doesn't exist in storage, try database path
         if (!file_exists($jsonPath)) {
-            $jsonPath = base_path('database/seeders/devices.json');
+            $jsonPath = database_path('json/devices.json');
         }
 
+        // If the file doesn't exist in either location, try seeders folder
         if (!file_exists($jsonPath)) {
-            $this->command->error('JSON devices file not found. Make sure to place devices.json in storage/app/ or database/seeders/');
+            $jsonPath = database_path('seeders/devices.json');
+        }
+
+        // If the file doesn't exist in either location, exit
+        if (!file_exists($jsonPath)) {
+            $this->command->error('JSON file not found. Make sure to place devices.json in storage/app/ or database/json/ or database/seeders/');
             return;
         }
+
 
         $jsonContent = file_get_contents($jsonPath);
         $devicesData = json_decode($jsonContent, true);
@@ -407,7 +415,7 @@ class HandphoneSeeder extends Seeder
 
             // Gunakan data asli dari JSON jika tersedia atau generate
             $price = isset($record['price']) ? intval(str_replace(['₹', ','], '', $record['price'])) * 190 :
-                   rand(1499000, 25999000);
+                rand(1499000, 25999000);
 
             $cameraScore = $this->getRandomScore(6, 10);
             $batteryScore = $this->getRandomScore(6, 10);

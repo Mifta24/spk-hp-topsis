@@ -14,17 +14,22 @@ class BrandSeeder extends Seeder
      */
     public function run(): void
     {
-        // Path to JSON file - ajust this to where you saved the file
-        $$json = json_decode(file_get_contents(database_path('json/brands.json')), true);
+        // Path to JSON file - adjust this to where you saved the file
+        $jsonPath = Storage::path('brands.json');
 
-        // If the file doesn't exist in storage, try direct path
+        // If the file doesn't exist in storage, try database path
         if (!file_exists($jsonPath)) {
-            $jsonPath = base_path('database/seeders/brands.json');
+            $jsonPath = database_path('json/brands.json');
+        }
+
+        // If the file doesn't exist in either location, try seeders folder
+        if (!file_exists($jsonPath)) {
+            $jsonPath = database_path('seeders/brands.json');
         }
 
         // If the file doesn't exist in either location, exit
         if (!file_exists($jsonPath)) {
-            $this->command->error('JSON file not found. Make sure to place brands.json in storage/app/ or database/seeders/');
+            $this->command->error('JSON file not found. Make sure to place brands.json in storage/app/ or database/json/ or database/seeders/');
             return;
         }
 
