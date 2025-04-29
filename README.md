@@ -2,13 +2,15 @@
 
 ![PhoneMatch Logo](https://cdn-icons-png.flaticon.com/512/186/186239.png)
 
+## Website PhoneMatch
+![PhoneMatch Website] (https://phonematch.laravel.cloud)
+
 <div align="center">
   <a href="#fitur"><strong>Fitur</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
   <a href="#teknologi"><strong>Teknologi</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
   <a href="#instalasi"><strong>Instalasi</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
   <a href="#penggunaan"><strong>Penggunaan</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
   <a href="#metodologi"><strong>Metodologi</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
-  <a href="#dokumentasi-api"><strong>API</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
   <a href="#kontribusi"><strong>Kontribusi</strong></a>
 </div>
 
@@ -176,36 +178,8 @@ PhoneMatch mengimplementasikan metode TOPSIS untuk memberikan rekomendasi handph
 7. **Mengurutkan Alternatif**
    - Mengurutkan handphone berdasarkan skor preferensi
 
-## 🔌 Dokumentasi API
 
-PhoneMatch menyediakan API untuk akses programatis ke data dan fitur rekomendasi.
 
-### Endpoint
-
-| Endpoint | Metode | Deskripsi |
-|----------|--------|-----------|
-| `/api/handphones` | GET | Mendapatkan daftar handphone |
-| `/api/handphones/{id}` | GET | Mendapatkan detail handphone tertentu |
-| `/api/recommendations` | POST | Mendapatkan rekomendasi berdasarkan kriteria yang dikirim |
-
-### Contoh Penggunaan
-
-**Mendapatkan Rekomendasi:**
-
-```bash
-curl -X POST http://localhost:8000/api/recommendations \
-  -H "Content-Type: application/json" \
-  -d '{
-    "price_min": 2000000,
-    "price_max": 8000000,
-    "weights": {
-      "camera": 5,
-      "battery": 4,
-      "ram": 5,
-      "processor": 3
-    }
-  }'
-```
 
 ## 📁 Struktur Database
 
