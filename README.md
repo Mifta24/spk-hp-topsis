@@ -3,7 +3,7 @@
 ![PhoneMatch Logo](https://cdn-icons-png.flaticon.com/512/186/186239.png)
 
 ## Website PhoneMatch
-![PhoneMatch Website] (https://phonematch.laravel.cloud)
+![PhoneMatch Website](https://phonematch.laravel.cloud)
 
 <div align="center">
   <a href="#fitur"><strong>Fitur</strong></a> &nbsp;&nbsp;•&nbsp;&nbsp;
@@ -20,7 +20,7 @@
 
 PhoneMatch adalah sistem pendukung keputusan berbasis web yang dirancang untuk membantu pengguna menemukan handphone terbaik berdasarkan preferensi mereka. Menggunakan metode TOPSIS (Technique for Order Preference by Similarity to Ideal Solution), sistem ini menganalisis berbagai kriteria handphone seperti kamera, baterai, performa, dan harga untuk memberikan rekomendasi yang dipersonalisasi.
 
-![PhoneMatch Screenshot](https://via.placeholder.com/1200x600?text=PhoneMatch+Screenshot)
+![PhoneMatch Screenshot](./docs/about-phonematch.jpeg)
 
 ## ✨ Fitur
 
