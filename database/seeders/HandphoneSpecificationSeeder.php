@@ -15,11 +15,17 @@ class HandphoneSpecificationSeeder extends Seeder
      */
     public function run(): void
     {
-        // Load JSON data untuk devices yang mungkin memiliki spesifikasi tambahan
-        $jsonPath = json_decode(file_get_contents(database_path('json/devices.json')), true);
+        // Coba beberapa lokasi untuk file JSON
+        $jsonPath = Storage::path('devices.json');
 
+        // Jika tidak ada di storage, coba di database/json
         if (!file_exists($jsonPath)) {
-            $jsonPath = base_path('database/seeders/devices.json');
+            $jsonPath = database_path('json/devices.json');
+        }
+
+        // Jika tidak ada di database/json, coba di database/seeders
+        if (!file_exists($jsonPath)) {
+            $jsonPath = database_path('seeders/devices.json');
         }
 
         // Cek jika file JSON ada
@@ -27,6 +33,8 @@ class HandphoneSpecificationSeeder extends Seeder
         if (file_exists($jsonPath)) {
             $jsonContent = file_get_contents($jsonPath);
             $jsonData = json_decode($jsonContent, true);
+        } else {
+            $this->command->warn("JSON devices file not found. Some specifications will use default values.");
         }
 
         // Dapatkan semua handphone dari database
@@ -242,7 +250,7 @@ class HandphoneSpecificationSeeder extends Seeder
                     'image' => $record['image'] ?? '-',
                     'processor_name' => $record['chipset'] ?? '-',
                     'camera_detail' => $record['camera_pixel'] ?? '-',
-                    'battery_capacity' => $record['battery_size'] .' | '. $record['battery_type'] ?? '-',
+                    'battery_capacity' => $record['battery_size'] . ' | ' . $record['battery_type'] ?? '-',
                     'ram_size' => $record['ram'] ?? '-',
                     'storage_size' => $record['storage'] ?? '-',
                     'screen_size' => $record['specifications']['screen_size'] ?? '-',
@@ -432,10 +440,26 @@ class HandphoneSpecificationSeeder extends Seeder
     private function generateColorsInfo(): array
     {
         $allColors = [
-            'Black', 'White', 'Blue', 'Green', 'Red', 'Yellow',
-            'Gold', 'Silver', 'Gray', 'Purple', 'Pink', 'Orange',
-            'Midnight Blue', 'Forest Green', 'Graphite', 'Charcoal',
-            'Glacier White', 'Aqua Blue', 'Neon Yellow', 'Ruby Red'
+            'Black',
+            'White',
+            'Blue',
+            'Green',
+            'Red',
+            'Yellow',
+            'Gold',
+            'Silver',
+            'Gray',
+            'Purple',
+            'Pink',
+            'Orange',
+            'Midnight Blue',
+            'Forest Green',
+            'Graphite',
+            'Charcoal',
+            'Glacier White',
+            'Aqua Blue',
+            'Neon Yellow',
+            'Ruby Red'
         ];
 
         shuffle($allColors);
@@ -445,10 +469,19 @@ class HandphoneSpecificationSeeder extends Seeder
     private function generateFeaturesInfo(): array
     {
         $possibleFeatures = [
-            'Fingerprint sensor', 'Face unlock', 'NFC', 'Bluetooth 5.0',
-            'Wi-Fi 6', 'USB Type-C', 'IP68 water resistance', 'Stereo speakers',
-            'Fast charging', 'Wireless charging', 'Reverse wireless charging',
-            '3.5mm headphone jack', 'microSD card slot'
+            'Fingerprint sensor',
+            'Face unlock',
+            'NFC',
+            'Bluetooth 5.0',
+            'Wi-Fi 6',
+            'USB Type-C',
+            'IP68 water resistance',
+            'Stereo speakers',
+            'Fast charging',
+            'Wireless charging',
+            'Reverse wireless charging',
+            '3.5mm headphone jack',
+            'microSD card slot'
         ];
 
         shuffle($possibleFeatures);
