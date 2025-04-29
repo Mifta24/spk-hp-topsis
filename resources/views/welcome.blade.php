@@ -37,7 +37,8 @@
                         <!-- Video phone demo -->
                         <video autoplay muted loop playsinline class="object-cover h-full w-full">
                             <source
-                                src="https://cdn.dribbble.com/users/1117770/screenshots/15911615/media/a59fc6bf8d4177fc82f8b559227633d2.mp4"
+                            {{-- https://cdn.dribbble.com/userupload/41543119/file/original-a681978c12404fdbe5a6fce782b85cef.mp4 --}}
+                                src="https://cdn.dribbble.com/userupload/40490749/file/original-ecabdab75d9e951851cfe273434a7718.mp4"
                                 type="video/mp4">
                             <!-- Fallback image -->
                             <img src="https://source.unsplash.com/xsGxhtAsfSA/800x1600" alt="Phone"
