@@ -2,3 +2,5 @@
 !private/
 !public/
 !.gitignore
+!storage/app/devices.json
+!storage/app/brands.json
