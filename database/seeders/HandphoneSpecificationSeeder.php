@@ -16,7 +16,7 @@ class HandphoneSpecificationSeeder extends Seeder
     public function run(): void
     {
         // Load JSON data untuk devices yang mungkin memiliki spesifikasi tambahan
-        $jsonPath = storage_path('app/devices.json');
+        $jsonPath = json_decode(file_get_contents(database_path('json/devices.json')), true);
 
         if (!file_exists($jsonPath)) {
             $jsonPath = base_path('database/seeders/devices.json');

@@ -19,7 +19,7 @@ class HandphoneSmartphoneSeeder extends Seeder
         $this->createBrandsIfNeeded();
 
         // Path to the CSV file - adjust if needed
-        $csvFile = storage_path('app\Smartphone_2024.csv');
+        $csvFile = database_path('csv/handphone_smartphone.csv');
 
         if (!file_exists($csvFile)) {
             $this->command->error('CSV file not found at: ' . $csvFile);

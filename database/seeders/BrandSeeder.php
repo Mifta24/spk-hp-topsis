@@ -15,7 +15,7 @@ class BrandSeeder extends Seeder
     public function run(): void
     {
         // Path to JSON file - ajust this to where you saved the file
-        $jsonPath = storage_path('app/brands.json');
+        $$json = json_decode(file_get_contents(database_path('json/brands.json')), true);
 
         // If the file doesn't exist in storage, try direct path
         if (!file_exists($jsonPath)) {
