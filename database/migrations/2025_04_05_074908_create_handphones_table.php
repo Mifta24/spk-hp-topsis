@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('brand_id')->nullable()->after('id')->constrained()->onDelete('set null');
             $table->string('name');
-            $table->integer('price');
+              // Ubah tipe kolom price menjadi decimal dengan presisi 15,2
+            // (mengakomodasi angka hingga 13 digit dengan 2 desimal)
+            $table->decimal('price', 15, 2);
+            // $table->integer('price'); untuk mysql
             $table->integer('camera');   // skor kamera 1-10
             $table->integer('battery');  // skor baterai 1-10
             $table->integer('ram');      // skor RAM 1-10
@@ -35,7 +38,7 @@ return new class extends Migration
         // Drop the foreign key constraint first
         Schema::table('handphones', function (Blueprint $table) {
             $table->dropForeign(['brand_id']);
-            
+
         });
         // Then drop the table
         Schema::dropIfExists('handphones');
