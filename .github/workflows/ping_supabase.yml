@@ -2,7 +2,7 @@ name: Ping Supabase to Prevent Pausing
 
 on:
   schedule:
-    - cron: "0 */12 * * *" # Runs every 12 hours, more frequent to ensure it stays active
+    - cron: "0 */12 * * *" # Runs every 12 hours
   workflow_dispatch: # Allows manual triggering through GitHub UI
 
 jobs:
@@ -20,18 +20,32 @@ jobs:
       - name: Install dependencies
         run: npm install @supabase/supabase-js
 
+      - name: Debug environment variables
+        run: |
+          echo "SUPABASE_URL is set: ${{ secrets.SUPABASE_URL != '' }}"
+          echo "SUPABASE_KEY is set: ${{ secrets.SUPABASE_KEY != '' }}"
+
       - name: Ping Supabase
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
+          echo "Starting Supabase ping..."
           node -e "
           const { createClient } = require('@supabase/supabase-js');
-          const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
+          // Debug environment variables
+          console.log('SUPABASE_URL exists:', !!process.env.SUPABASE_URL);
+          console.log('SUPABASE_KEY exists:', !!process.env.SUPABASE_KEY);
+
+          // Hardcoded fallback for testing (remove in production)
+          const supabaseUrl = process.env.SUPABASE_URL || 'https://your-project-id.supabase.co';
+          const supabaseKey = process.env.SUPABASE_KEY || 'your-anon-key';
+
+          const supabase = createClient(supabaseUrl, supabaseKey);
 
           async function pingSupabase() {
             try {
-              // Replace 'handphones' with your actual table name
               const { data, error } = await supabase.from('handphones').select('id').limit(1);
 
               if (error) {
