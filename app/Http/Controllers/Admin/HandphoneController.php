@@ -177,7 +177,7 @@ class HandphoneController extends Controller
             'screen_size' => 'required|string|max:255',
             'os_version' => 'required|string|max:255',
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'image' => 'required|string',
+            // 'image' => 'required|string',
             'colors' => 'required|array',
             'description' => 'required|string',
         ]);

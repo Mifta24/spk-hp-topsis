@@ -1,0 +1,51 @@
+name: Ping Supabase to Prevent Pausing
+
+on:
+  schedule:
+    - cron: "0 */12 * * *" # Runs every 12 hours, more frequent to ensure it stays active
+  workflow_dispatch: # Allows manual triggering through GitHub UI
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install dependencies
+        run: npm install @supabase/supabase-js
+
+      - name: Ping Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          node -e "
+          const { createClient } = require('@supabase/supabase-js');
+          const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
+          async function pingSupabase() {
+            try {
+              // Replace 'handphones' with your actual table name
+              const { data, error } = await supabase.from('handphones').select('id').limit(1);
+
+              if (error) {
+                console.error('Error pinging Supabase:', error);
+                process.exit(1);
+              } else {
+                console.log('Successfully pinged Supabase at', new Date().toISOString());
+                console.log('Response:', data);
+              }
+            } catch (err) {
+              console.error('Unexpected error:', err);
+              process.exit(1);
+            }
+          }
+
+          pingSupabase();
+          "

@@ -15,7 +15,7 @@ class HandphoneSeeder extends Seeder
      */
     public function run(): void
     {
-        
+
         // Path to JSON file - adjust this to where you saved the file
         $jsonPath = Storage::path('devices.json');
 
@@ -369,13 +369,13 @@ class HandphoneSeeder extends Seeder
 
         // Pastikan setiap brand memiliki minimal beberapa handphone
         $brandCounts = array_fill_keys(array_values($brandMap), 0);
-        $minPerBrand = 30; // Minimal 20 handphone per brand
+        $minPerBrand = 10; // Minimal 20 handphone per brand
 
         // Tentukan berapa banyak handphone yang akan dibuat dari JSON
-        $totalToCreate = min(count($records), 400); // Ditingkatkan ke 150 untuk menjamin semua brand masuk
+        $totalToCreate = min(count($records), 200); // Ditingkatkan ke 150 untuk menjamin semua brand masuk
 
         // Tentukan berapa banyak handphone yang akan dibuat dari JSON
-        $totalToCreate = min(count($records), 400); // Maksimal 50 atau sesuai kebutuhan
+        $totalToCreate = min(count($records), 200); // Maksimal 50 atau sesuai kebutuhan
 
         for ($i = 0; $i < $totalToCreate; $i++) {
             // Tentukan brand yang akan digunakan untuk handphone ini
