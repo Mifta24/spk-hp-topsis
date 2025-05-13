@@ -254,25 +254,81 @@ class HandphoneController extends Controller
      */
     public function destroy(string $id)
     {
-        $handphone = Handphone::with('specification')->findOrFail($id);
+        try {
+            $handphone = Handphone::with('specification')->findOrFail($id);
 
-        // Delete image if it's a local file
-        if ($handphone->specification && $handphone->specification->image) {
-            if (str_contains($handphone->specification->image, 'storage/handphones')) {
-                $image = str_replace(asset('storage/'), 'public/', $handphone->specification->image);
-                Storage::delete($image);
+            // Delete image if it's a local file
+            if ($handphone->specification && $handphone->specification->image) {
+                if (str_contains($handphone->specification->image, 'storage/handphones')) {
+                    $image = str_replace(asset('storage/'), 'public/', $handphone->specification->image);
+                    Storage::delete($image);
+                }
+            }
+
+            // Delete specification first (to avoid foreign key constraint)
+            if ($handphone->specification) {
+                $handphone->specification->delete();
+            }
+
+            // Delete handphone
+            $handphone->delete();
+
+            return redirect()->route('admin.handphone.index')
+                ->with('success', 'Handphone berhasil dihapus');
+        } catch (\Exception $e) {
+            // Log error
+            \Log::error('Error deleting handphone: ' . $e->getMessage());
+
+            return redirect()->route('admin.handphone.index')
+                ->with('error', 'Terjadi kesalahan saat menghapus handphone. Silakan coba lagi.');
+        }
+    }
+
+
+    public function destroyMultiple(Request $request)
+    {
+        // Check if there are IDs in the request
+        if (!$request->has('ids') || !is_array($request->ids) || empty($request->ids)) {
+            return redirect()->route('admin.handphone.index')
+                ->with('error', 'Tidak ada handphone yang dipilih untuk dihapus.');
+        }
+
+        // Validate the IDs
+
+        $validator = Validator::make($request->all(), [
+            'ids' => 'required|array',
+            'ids.*' => 'exists:handphones,id'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->with('error', 'Invalid selection.');
+        }
+
+        $count = 0;
+        foreach ($request->ids as $id) {
+            $handphone = Handphone::with('specification')->find($id);
+            if ($handphone) {
+                // Delete image if it's a local file
+                if ($handphone->specification && $handphone->specification->image) {
+                    if (str_contains($handphone->specification->image, 'storage/handphones')) {
+                        $image = str_replace(asset('storage/'), 'public/', $handphone->specification->image);
+                        Storage::delete($image);
+                    }
+                }
+
+                // Delete specification first (to avoid foreign key constraint)
+                if ($handphone->specification) {
+                    $handphone->specification->delete();
+                }
+
+                // Delete handphone
+                $handphone->delete();
+                $count++;
             }
         }
 
-        // Delete specification first (to avoid foreign key constraint)
-        if ($handphone->specification) {
-            $handphone->specification->delete();
-        }
-
-        // Delete handphone
-        $handphone->delete();
-
         return redirect()->route('admin.handphone.index')
-            ->with('success', 'Handphone deleted successfully');
+            ->with('success', "$count handphone telah berhasil dihapus");
     }
 }

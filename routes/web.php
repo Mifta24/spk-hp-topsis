@@ -38,9 +38,13 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // Resource Routes
     Route::resource('criteria', AdminCriteriaController::class);
+
+    Route::delete('/handphone/destroy-multiple', [AdminHandphoneController::class, 'destroyMultiple'])
+        ->name('handphone.destroyMultiple');
+
     Route::resource('handphone', AdminHandphoneController::class);
     Route::resource('brand', AdminBrandController::class);
-
+   
     // Profile Routes
     Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile');
     Route::put('/profile/update', [AdminProfileController::class, 'updateProfile'])->name('profile.update');
